@@ -8,21 +8,52 @@ function App() {
   const [messages, setMessages] = useState([])
   const [input, setInput] = useState('')
   const [isLoading, setIsLoading] = useState(false)
+  const [suggestions, setSuggestions] = useState([])
 
   // Convert knowledge base to formatted text
   const knowledgeBaseContent = Object.entries(knowledgeBase.KnowledgeBase)
     .map(([q, a]) => `Q: ${q}\nA: ${a}`)
     .join('\n\n')
 
+  // Handle clicking a suggestion
+  const handleSuggestionClick = (suggestion) => {
+    setInput(suggestion)
+    sendMessage(suggestion)
+  }
+
+  // Generate suggestions based on the last interaction
+  const generateSuggestions = async (lastResponse) => {
+    try {
+      const genAI = new GoogleGenerativeAI(import.meta.env.VITE_GEMINI_API_KEY)
+      const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash-lite" })
+
+      const suggestionPrompt = `Based on this last response about IDMS ERP and GST:
+      "${lastResponse}"
+      
+      Generate 3 short, natural follow-up questions that a user might ask next. 
+      Return only the questions, one per line, without numbers or bullets.
+      Keep them concise and conversational.`
+
+      const result = await model.generateContent(suggestionPrompt)
+      const suggestionsText = result.response.text()
+      const newSuggestions = suggestionsText.split('\n').filter(s => s.trim())
+      setSuggestions(newSuggestions.slice(0, 3))
+    } catch (error) {
+      console.error('Error generating suggestions:', error)
+      setSuggestions([])
+    }
+  }
+
   // Handle sending messages
-  const sendMessage = async () => {
-    if (!input.trim() || isLoading) return
+  const sendMessage = async (messageText = input) => {
+    if (!messageText.trim() || isLoading) return
     
     // Add user message
-    const userMessage = { role: 'user', content: input }
+    const userMessage = { role: 'user', content: messageText }
     setMessages(prev => [...prev, userMessage])
     setInput('')
     setIsLoading(true)
+    setSuggestions([]) // Clear suggestions while loading
     
     try {
       const genAI = new GoogleGenerativeAI(import.meta.env.VITE_GEMINI_API_KEY)
@@ -35,7 +66,7 @@ function App() {
       
       IntroContext: ${knowledgeBase.IntroContext}
       
-      User: ${input}
+      User: ${messageText}
       
       Provide a helpful, concise response. If the information is not in the knowledge base, politely say so.`
 
@@ -48,6 +79,9 @@ function App() {
         role: 'assistant', 
         content: response 
       }])
+
+      // Generate suggestions based on the response
+      await generateSuggestions(response)
     } catch (error) {
       console.error('Error calling Gemini API:', error)
       setMessages(prev => [...prev, {
@@ -107,6 +141,18 @@ function App() {
           )}
         </div>
         
+        <div className="suggestions-container">
+          {suggestions.map((suggestion, index) => (
+            <button
+              key={index}
+              className="suggestion-button"
+              onClick={() => handleSuggestionClick(suggestion)}
+            >
+              {suggestion}
+            </button>
+          ))}
+        </div>
+
         <div className="input-container">
           <input
             type="text"
@@ -116,7 +162,7 @@ function App() {
             placeholder="Ask a question..."
             disabled={isLoading}
           />
-          <button onClick={sendMessage} disabled={isLoading}>
+          <button onClick={() => sendMessage()} disabled={isLoading}>
             {isLoading ? '...' : 'Send'}
           </button>
         </div>

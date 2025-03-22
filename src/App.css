@@ -336,6 +336,34 @@ body {
   transform: translateY(-2px);
 }
 
+.suggestions-container {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  padding: 0 4px;
+}
+
+.suggestion-button {
+  background: var(--card-background);
+  border: 1px solid var(--border-color);
+  padding: 8px 16px;
+  border-radius: var(--border-radius);
+  font-size: 0.9rem;
+  color: var(--text-color);
+  cursor: pointer;
+  transition: var(--transition);
+  max-width: fit-content;
+}
+
+.suggestion-button:hover {
+  background: var(--primary-color);
+  border-color: var(--primary-color);
+  color: white;
+  transform: translateY(-1px);
+}
+
 /* Responsive styling */
 @media (max-width: 768px) {
   .header h1 {
