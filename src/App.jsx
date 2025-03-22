@@ -1,36 +1,18 @@
-import { useState, useEffect } from 'react'
-import { GoogleGenerativeAI } from '@google/generative-ai'
+import { useState } from 'react'
 import ReactMarkdown from 'react-markdown'
+import { GoogleGenerativeAI } from '@google/generative-ai'
+import knowledgeBase from './knowledgeBase.json'
 import './App.css'
 
 function App() {
-  // Access the API key from environment variables
-  const API_KEY = import.meta.env.VITE_GEMINI_API_KEY
-  
   const [messages, setMessages] = useState([])
   const [input, setInput] = useState('')
   const [isLoading, setIsLoading] = useState(false)
-  const [faqContent, setFaqContent] = useState('')
 
-  // Load FAQ content when component mounts
-  useEffect(() => {
-    loadFaqContent()
-  }, [])
-
-  // Load FAQ content from DOCX text file
-  const loadFaqContent = async () => {
-    try {
-      const response = await fetch('/assets/FAQs.docx')
-      const text = await response.text()
-      setFaqContent(text)
-    } catch (error) {
-      console.error('Error loading FAQ content:', error)
-      setMessages(prev => [...prev, {
-        role: 'assistant',
-        content: 'Error loading FAQ content. Please make sure the FAQs.docx file is in the public/assets folder.'
-      }])
-    }
-  }
+  // Convert knowledge base to formatted text
+  const knowledgeBaseContent = Object.entries(knowledgeBase.KnowledgeBase)
+    .map(([q, a]) => `Q: ${q}\nA: ${a}`)
+    .join('\n\n')
 
   // Handle sending messages
   const sendMessage = async () => {
@@ -43,34 +25,34 @@ function App() {
     setIsLoading(true)
     
     try {
-      // Initialize Gemini API
-      const genAI = new GoogleGenerativeAI(API_KEY)
-      const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash-latest" })
+      const genAI = new GoogleGenerativeAI(import.meta.env.VITE_GEMINI_API_KEY)
+
+      // Format the knowledge base as context for Gemini
+      const prompt = `You are an AI assistant that helps answer questions about IDMS ERP and GST compliance.
+      Use the following knowledge base to answer questions:
       
-      // Create prompt with context from FAQs
-      const prompt = `
-        You are an AI assistant that uses the provided knowledge base to answer questions.
-        Knowledge base:
-        ${faqContent}
-        
-        Answer the following question in a helpful, concise way. If the answer is not in the knowledge base, 
-        politely say so and provide a general response if possible.
-        
-        User question: ${input}
-      `
+      ${knowledgeBaseContent}
       
-      // Generate response
+      IntroContext: ${knowledgeBase.IntroContext}
+      
+      User: ${input}
+      
+      Provide a helpful, concise response. If the information is not in the knowledge base, politely say so.`
+
+      const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash-lite" })
       const result = await model.generateContent(prompt)
-      const response = result.response
-      const text = response.text()
+      const response = result.response.text()
       
       // Add assistant response
-      setMessages(prev => [...prev, { role: 'assistant', content: text }])
+      setMessages(prev => [...prev, { 
+        role: 'assistant', 
+        content: response 
+      }])
     } catch (error) {
       console.error('Error calling Gemini API:', error)
       setMessages(prev => [...prev, {
         role: 'assistant',
-        content: 'Sorry, there was an error processing your request. Please try again later.'
+        content: 'Sorry, there was an error processing your request. Please check your API key and try again.'
       }])
     } finally {
       setIsLoading(false)
@@ -88,7 +70,7 @@ function App() {
           {messages.length === 0 && (
             <div className="welcome-message">
               <h2>Welcome to AI Sentinel of Knowledge!</h2>
-              <p>Ask me anything about the FAQs. I'm here to help.</p>
+              <p>Ask me anything about our knowledge base. I'm here to help.</p>
             </div>
           )}
           
@@ -131,7 +113,7 @@ function App() {
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onKeyPress={(e) => e.key === 'Enter' && sendMessage()}
-            placeholder="Ask about the FAQs..."
+            placeholder="Ask a question..."
             disabled={isLoading}
           />
           <button onClick={sendMessage} disabled={isLoading}>
