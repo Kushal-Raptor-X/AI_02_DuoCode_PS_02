@@ -1,0 +1,48 @@
+AI Sentinel of Knowledge - Project Abstract
+
+1️⃣ Existing Solutions & Research
+• Current FAQ systems often rely on static documentation that becomes outdated quickly
+• Traditional chatbots lack context-awareness and provide generic responses
+• Existing solutions often require extensive training data and complex setups
+• Most FAQ systems don't adapt to user interactions or provide personalized suggestions
+
+2️⃣ Problem Statement Selection
+• Organizations struggle with efficient knowledge dissemination through traditional FAQ systems
+• Users face difficulties in finding relevant information quickly from extensive documentation
+• Current FAQ solutions lack intelligent interaction and contextual understanding
+• Manual FAQ maintenance and updates are time-consuming and error-prone
+
+3️⃣ Solution Approach
+• Developed an AI-powered FAQ assistant using Google's Gemini 1.5 Flash Lite model
+• Implemented dynamic content loading from structured documentation (FAQs.docx)
+• Created an intuitive chat interface with real-time response generation
+• Integrated smart suggestion system that adapts based on conversation context
+• Utilized markdown rendering for formatted responses and better readability
+
+4️⃣ Unique Features & Innovations
+• Context-aware response generation using latest Gemini AI model
+• Dynamic suggestion system that evolves based on user interactions
+• Real-time markdown rendering for formatted responses
+• Clean and intuitive user interface with loading states
+• Intelligent follow-up question generation
+• Support for rich text formatting and documentation structure
+
+5️⃣ Technology Stack
+• Frontend Framework: React with Vite
+• AI Integration: Google Generative AI (Gemini 1.5 Flash Lite)
+• Styling: Custom CSS with modern design principles
+• Documentation: Dynamic loading of DOCX files
+• Markdown Support: React-Markdown for formatted responses
+• Development Tools:
+  - ESLint for code quality
+  - Modern JavaScript (ES6+)
+  - Responsive design principles
+
+6️⃣ Potential Impact
+• Significantly reduces time spent searching through documentation
+• Improves user experience with intelligent, context-aware responses
+• Reduces support team workload by providing instant, accurate answers
+• Makes knowledge sharing more efficient and accessible
+• Scalable solution that can be adapted for various organizations
+• Potential for integration with existing knowledge management systems
+• Cost-effective alternative to maintaining large support teams
