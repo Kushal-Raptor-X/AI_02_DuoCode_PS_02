@@ -1,78 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="AI Sentinel of Knowledge - A chatbot powered by Gemini 2 Flash Lite AI" />
     <title>AI Sentinel of Knowledge</title>
-    <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-</head>
-<body>
-    <div class="app-container">
-        <header class="app-header">
-            <div class="logo-container">
-                <img src="https://via.placeholder.com/50" alt="AI Sentinel Logo" class="logo">
-                <h1>AI Sentinel of Knowledge</h1>
-            </div>
-            <div class="user-info">
-                <span class="user-name">Welcome, User</span>
-                <img src="https://via.placeholder.com/40" alt="User Avatar" class="user-avatar">
-            </div>
-        </header>
-
-        <main class="chat-container">
-            <div class="chat-messages" id="chat-messages">
-                <!-- Messages will be added here dynamically -->
-                <div class="message bot-message">
-                    <div class="message-avatar">
-                        <img src="https://via.placeholder.com/40" alt="Bot Avatar">
-                    </div>
-                    <div class="message-content">
-                        <div class="message-text">Hello! I'm the AI Sentinel of Knowledge. How can I assist you today? I can help you navigate our ERP system, find documentation, or answer any questions about company resources.</div>
-                        <div class="message-time">Just now</div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="suggestion-chips">
-                <button class="chip">How do I reset my password?</button>
-                <button class="chip">Sales reports access</button>
-                <button class="chip">HR policies</button>
-                <button class="chip">Finance module help</button>
-            </div>
-
-            <div class="chat-input-container">
-                <textarea id="chat-input" placeholder="Type your message here..." rows="1"></textarea>
-                <button id="send-button" class="send-button">
-                    <i class="fas fa-paper-plane"></i>
-                </button>
-                <button id="mic-button" class="mic-button">
-                    <i class="fas fa-microphone"></i>
-                </button>
-            </div>
-        </main>
-
-        <div class="action-sidebar">
-            <div class="sidebar-section">
-                <h3>Recent Conversations</h3>
-                <ul class="conversation-list">
-                    <li>ERP Navigation Help</li>
-                    <li>Sales Report Access</li>
-                    <li>Password Reset</li>
-                </ul>
-            </div>
-            <div class="sidebar-section">
-                <h3>Quick Links</h3>
-                <ul class="quick-links">
-                    <li><a href="#">ERP Dashboard</a></li>
-                    <li><a href="#">Knowledge Base</a></li>
-                    <li><a href="#">Support Ticket</a></li>
-                    <li><a href="#">Company Directory</a></li>
-                </ul>
-            </div>
-        </div>
-    </div>
-
-    <script src="script.js"></script>
-</body>
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
 </html>
