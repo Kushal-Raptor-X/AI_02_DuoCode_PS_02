@@ -14,6 +14,19 @@
   --transition: all 0.3s ease;
 }
 
+/* Dark mode variables */
+[data-theme="dark"] {
+  --primary-color: #818cf8;
+  --secondary-color: #a78bfa;
+  --accent-color: #e879f9;
+  --background-color: #1e1e2e;
+  --card-background: #2a2a3c;
+  --text-color: #e2e8f0;
+  --text-light: #94a3b8;
+  --border-color: #3f3f5a;
+  --box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2), 0 2px 4px -1px rgba(0, 0, 0, 0.1);
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -33,6 +46,9 @@ body {
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 .logo {
@@ -75,9 +91,11 @@ body {
   max-width: 1000px;
   margin: 0 auto;
   padding: 20px;
-  height: 100vh;
+  height: 100vh; /* Fixed height instead of min-height */
   display: flex;
   flex-direction: column;
+  width: 100%;
+  overflow: hidden; /* Prevent scrolling of the entire container */
 }
 
 .header {
@@ -87,6 +105,7 @@ body {
   margin-bottom: 20px;
   padding-bottom: 20px;
   border-bottom: 1px solid var(--border-color);
+  flex-shrink: 0; /* Prevent header from shrinking */
 }
 
 .header h1 {
@@ -96,6 +115,31 @@ body {
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
+}
+
+/* Header buttons */
+.header-buttons {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.about-button {
+  display: flex;
+  align-items: center;
+  background: none;
+  border: 1px solid var(--border-color);
+  padding: 8px 16px;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  transition: var(--transition);
+  color: var(--text-color);
+  font-size: 0.9rem;
+}
+
+.about-button:hover {
+  background-color: var(--border-color);
 }
 
 .settings-button {
@@ -116,6 +160,7 @@ body {
   flex-direction: column;
   flex: 1;
   overflow: hidden;
+  min-height: 0; /* Important for Firefox to respect flex child overflow */
 }
 
 .messages {
@@ -244,6 +289,7 @@ body {
 .input-container {
   display: flex;
   gap: 10px;
+  flex-shrink: 0; /* Prevent input box from shrinking */
 }
 
 .input-container input {
@@ -343,6 +389,7 @@ body {
   flex-wrap: wrap;
   justify-content: flex-start;
   padding: 0 4px;
+  flex-shrink: 0; /* Prevent suggestions from shrinking */
 }
 
 .suggestion-button {
@@ -364,10 +411,274 @@ body {
   transform: translateY(-1px);
 }
 
+/* Theme toggle */
+.theme-toggle {
+  display: flex;
+  align-items: center;
+  background: none;
+  border: 1px solid var(--border-color);
+  padding: 8px 16px;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  transition: var(--transition);
+  color: var(--text-color);
+  font-size: 0.9rem;
+  gap: 8px;
+}
+
+.theme-toggle:hover {
+  background-color: var(--border-color);
+}
+
+.theme-toggle-icon {
+  width: 16px;
+  height: 16px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Human support prompt styling */
+.human-support-prompt {
+  border: 1px solid var(--primary-color);
+  background-color: var(--card-background);
+}
+
+.support-buttons {
+  display: flex;
+  gap: 10px;
+  margin-top: 15px;
+  flex-wrap: wrap;
+}
+
+.support-button {
+  padding: 10px 15px;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  font-weight: 600;
+  transition: var(--transition);
+  flex: 1;
+  min-width: 120px;
+}
+
+.support-yes {
+  background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+  color: white;
+  border: none;
+}
+
+.support-no {
+  background: var(--card-background);
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
+}
+
+.support-yes:hover {
+  opacity: 0.9;
+  transform: translateY(-2px);
+}
+
+.support-no:hover {
+  background-color: var(--border-color);
+}
+
+/* Contact form styling */
+.contact-form-container {
+  width: 100%;
+  max-width: 100%;
+}
+
+.contact-form {
+  background-color: var(--card-background);
+  padding: 15px;
+  border-radius: var(--border-radius);
+  margin-top: 15px;
+  border: 1px solid var(--border-color);
+}
+
+.form-group {
+  margin-bottom: 15px;
+  text-align: left;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: 600;
+  color: var(--text-color);
+  font-size: 0.9rem;
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  font-size: 0.9rem;
+  color: var(--text-color);
+  background-color: var(--background-color);
+  transition: var(--transition);
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  border-color: var(--primary-color);
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.1);
+}
+
+.contact-submit-button {
+  width: 100%;
+  padding: 12px;
+  background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+  color: white;
+  border: none;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  font-weight: 600;
+  transition: var(--transition);
+  margin-top: 10px;
+}
+
+.contact-submit-button:hover {
+  opacity: 0.9;
+  transform: translateY(-2px);
+}
+
+.confirmation-message {
+  background-color: var(--success-color);
+  color: white;
+  padding: 12px;
+  border-radius: var(--border-radius);
+  margin-top: 10px;
+  text-align: center;
+}
+
+/* About modal */
+.about-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  animation: fadeIn 0.2s ease;
+}
+
+.about-content {
+  background-color: var(--card-background);
+  width: 90%;
+  max-width: 500px;
+  border-radius: var(--border-radius);
+  padding: 30px;
+  box-shadow: var(--box-shadow);
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+.about-content h2 {
+  margin-bottom: 20px;
+  font-size: 1.8rem;
+  background: linear-gradient(to right, var(--primary-color), var(--accent-color));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  text-align: center;
+}
+
+.about-content p {
+  margin-bottom: 15px;
+  line-height: 1.6;
+  color: var(--text-color);
+  text-align: center;
+}
+
+.team-section {
+  margin-top: 25px;
+  padding-top: 15px;
+  border-top: 1px solid var(--border-color);
+}
+
+.team-section h3 {
+  margin-bottom: 15px;
+  font-size: 1.3rem;
+  color: var(--text-color);
+  text-align: center;
+}
+
+.team-members {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.team-member-button {
+  padding: 12px 16px;
+  background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+  color: white;
+  border: none;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  font-weight: 600;
+  transition: var(--transition);
+  text-align: center;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.github-icon {
+  margin-right: 5px;
+  transition: transform 0.3s ease;
+}
+
+.team-member-button:hover .github-icon {
+  transform: rotate(10deg) scale(1.1);
+}
+
+.close-modal-button {
+  width: 100%;
+  padding: 12px;
+  background: var(--card-background);
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  font-weight: 600;
+  transition: var(--transition);
+  margin-top: 10px;
+}
+
+.close-modal-button:hover {
+  background-color: var(--border-color);
+}
+
 /* Responsive styling */
 @media (max-width: 768px) {
+  #root {
+    padding: 1rem;
+  }
+  
+  .app-container {
+    padding: 10px;
+  }
+  
+  .header {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  
   .header h1 {
-    font-size: 1.5rem;
+    font-size: 1.4rem;
   }
   
   .message {
@@ -375,13 +686,154 @@ body {
     padding: 12px;
   }
   
+  .input-container {
+    flex-direction: row;
+  }
+  
   .input-container input,
   .input-container button {
     padding: 12px;
   }
   
+  .input-container button {
+    min-width: 80px;
+  }
+  
   .settings-container {
-    margin: 50px auto;
+    margin: 30px auto;
     padding: 20px;
+    width: 90%;
+  }
+  
+  .suggestions-container {
+    justify-content: center;
+  }
+
+  .support-buttons {
+    flex-direction: column;
+  }
+  
+  .support-button {
+    width: 100%;
+  }
+  
+  .contact-form {
+    padding: 12px;
+  }
+  
+  .form-group {
+    margin-bottom: 12px;
+  }
+  
+  .form-group input,
+  .form-group textarea {
+    padding: 8px;
+  }
+
+  .about-content {
+    padding: 20px;
+    width: 95%;
+  }
+  
+  .about-content h2 {
+    font-size: 1.5rem;
+  }
+  
+  .team-section h3 {
+    font-size: 1.2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  #root {
+    padding: 0.5rem;
+  }
+  
+  .app-container {
+    padding: 8px;
+  }
+  
+  .header {
+    margin-bottom: 15px;
+    padding-bottom: 15px;
+  }
+  
+  .header h1 {
+    font-size: 1.2rem;
+    width: 100%;
+    text-align: center;
+    margin-bottom: 10px;
+  }
+  
+  .message {
+    max-width: 95%;
+    padding: 10px;
+  }
+  
+  .message-role {
+    font-size: 0.7rem;
+  }
+  
+  .input-container {
+    flex-direction: column;
+  }
+  
+  .input-container input {
+    padding: 10px;
+  }
+  
+  .input-container button {
+    width: 100%;
+    padding: 10px;
+  }
+  
+  .theme-toggle {
+    margin: 0 auto;
+  }
+
+  .human-support-prompt p {
+    font-size: 0.9rem;
+  }
+  
+  .support-button {
+    padding: 8px;
+    font-size: 0.8rem;
+  }
+  
+  .contact-form {
+    padding: 10px;
+  }
+  
+  .form-group label {
+    font-size: 0.8rem;
+  }
+  
+  .form-group input,
+  .form-group textarea {
+    padding: 6px;
+    font-size: 0.8rem;
+  }
+  
+  .contact-submit-button {
+    padding: 8px;
+  }
+
+  .header-buttons {
+    width: 100%;
+    justify-content: center;
+    margin-top: 10px;
+  }
+  
+  .about-content {
+    padding: 15px;
+  }
+  
+  .about-content h2 {
+    font-size: 1.3rem;
+  }
+  
+  .team-member-button, 
+  .close-modal-button {
+    padding: 10px;
   }
 }

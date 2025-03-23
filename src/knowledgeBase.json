@@ -21,5 +21,148 @@
         "How does IDMS handle GST-exempt and zero-rated supplies?": "IDMS supports GST-exempt goods (e.g., agricultural products, healthcare services) and zero-rated supplies (exports, supplies to SEZ).",
         "How does IDMS automate GST payments?": "IDMS calculates net GST liability, generates a Challan for GST payment (PMT-06), and facilitates online payments via Net Banking, UPI, or NEFT/RTGS.",
         "How does IDMS generate audit reports for GST compliance?": "IDMS maintains a detailed audit trail for GST ledger reconciliation (sales vs. purchases), invoice modifications & corrections, and GSTR-9 (Annual Return) & GSTR-9C (Reconciliation Statement)."
+    },
+    "ERP_Modules": {
+        "Sales_Module": {
+            "What_It_Does": "Manages customer orders, invoices, shipments, and payments.",
+            "Master_Data": {
+                "B2B_Customers": "Customer details, credit limits",
+                "SKU_Master": "Product details, pricing, HSN codes",
+                "Payment_Terms": "Payment conditions for customers",
+                "Logistics": "Shipping modes and partners"
+            },
+            "Transactions": [
+                "Quotation",
+                "Sales Order (SO)",
+                "Dispatch Request (DRN)",
+                "Advanced Shipment Notice (ASN)",
+                "Proforma Invoice",
+                "Service Invoice",
+                "E-Way Bill",
+                "Sales Credit/Debit Notes",
+                "Cancellation of SO/DRN"
+            ],
+            "Reports": [
+                "Sales Register",
+                "Order Confirmation",
+                "Inventory Reports"
+            ],
+            "Dependency": [
+                "Requires stock from Stores",
+                "Needs approval from Finance for credit sales",
+                "Dispatch is linked to Logistics"
+            ]
+        },
+        "Purchase_Module": {
+            "What_It_Does": "Procures raw materials and services required for production.",
+            "Master_Data": {
+                "Supplier_Master": "Vendor details, credit terms",
+                "Item_Master": "Material descriptions, unit of measure",
+                "Payment_Terms": "Agreements with suppliers",
+                "GST/P": "HSN/SAC codes for taxation"
+            },
+            "Transactions": [
+                "Purchase Orders (PO)",
+                "Supplementary PO (SPO)",
+                "Amendments",
+                "Cancellations",
+                "Purchase Debit Notes",
+                "Job Work Orders (for outsourced production)"
+            ],
+            "Reports": [
+                "PO Status",
+                "Outstanding POs",
+                "Inventory Levels"
+            ],
+            "Dependency": [
+                "Linked with Stores for material availability",
+                "Requires Finance approval for high-value purchases",
+                "Quality Control checks incoming material"
+            ]
+        },
+        "Stores_Module": {
+            "What_It_Does": "Manages inward and outward movement of raw materials, work-in-progress (WIP), and finished goods.",
+            "Master_Data": {
+                "Inventory_Zones": "Main Store, Stock Preparation Store"
+            },
+            "Transactions": [
+                "Goods Receipt Note (GRN)",
+                "Goods Issue Note (GIN)",
+                "Stock Transfer (GTE –Intra-movement of material)"
+            ],
+            "Reports": [
+                "Stock Aging",
+                "Reorder Level",
+                "Inventory Reports"
+            ],
+            "Dependency": [
+                "Receives materials from Purchase",
+                "Issues raw materials to Production",
+                "Stores finished goods for Sales Dispatch"
+            ]
+        },
+        "Production_Module": {
+            "What_It_Does": "Manages the manufacturing process from raw material to finished product.",
+            "Master_Data": {
+                "Raw_Material_Master": "List of raw materials",
+                "Production_Process_Definitions": "Defined workflows for manufacturing"
+            },
+            "Transactions": [
+                "Batch Card Entry (Production Plan)",
+                "Goods Transfer Request (GTR)",
+                "Work Orders",
+                "Job Card Entries"
+            ],
+            "Reports": [
+                "Production Inventory",
+                "Finished Goods Tracking"
+            ],
+            "Dependency": [
+                "Receives raw material from Stores",
+                "Requires approval from Quality before releasing products",
+                "Outputs finished goods to Stores for dispatch"
+            ]
+        },
+        "Quality_Module": {
+            "What_It_Does": "Ensures materials, WIP, and finished products meet required standards.",
+            "Master_Data": {
+                "Inspection_Checklists": "List of quality checks",
+                "Standard_Specifications": "Quality benchmarks"
+            },
+            "Transactions": [
+                "Material Inspection (MRN, PDIR Entries)",
+                "Job Card Inspections",
+                "Batch Release"
+            ],
+            "Reports": [
+                "Inspection Reports",
+                "Material Re-validation"
+            ],
+            "Dependency": [
+                "Approves materials received from Purchase",
+                "Approves WIP and finished goods for Production",
+                "Ensures quality compliance before Dispatch"
+            ]
+        },
+        "Dispatch_Logistics_Module": {
+            "What_It_Does": "Manages order fulfillment, shipping, and invoicing.",
+            "Master_Data": {
+                "Shipping_Modes": "Available shipping options",
+                "Transport_Partners": "Logistics service providers"
+            },
+            "Transactions": [
+                "Sales Order Dispatch (DRN)",
+                "Advance Shipment Notices (ASN)"
+            ],
+            "Reports": [
+                "Dispatch Status",
+                "Sales Register"
+            ],
+            "Dependency": [
+                "Needs approved finished goods from Stores",
+                "Requires Quality Approval for dispatch",
+                "Generates invoices linked with Sales"
+            ]
+        }
     }
 }
